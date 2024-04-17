@@ -3,7 +3,7 @@ name: Build Alpine Caddy Cloudflare DNS Image
 on:
   workflow_dispatch:
     inputs:
-      caddy_version:
+      release_version:
         description: Caddy version
         required: true
 
@@ -37,12 +37,12 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          build-args: CADDY_VERSION=${{ github.event.inputs.caddy_version }}
+          build-args: RELEASE_VERSION=${{ github.event.inputs.release_version }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ghcr.io/neilbartley/caddy-cloudflare:latest
-            ghcr.io/neilbartley/caddy-cloudflare:${{ github.event.inputs.caddy_version }}
+            ghcr.io/neilbartley/caddy-cloudflare:${{ github.event.inputs.release_version }}
           labels: |
             org.opencontainers.image.title=Caddy Cloudflare
             org.opencontainers.image.description=Docker for caddy-cloudflare - forked from Technoguyfication/caddy-cloudflare
